@@ -1,24 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
+
+import Header from './view/header-footer/Header';
+import Footer from './view/header-footer/Footer';
+import ProductListPage from './view/product/ProductListPage';
+import ContactPage from './view/contact/ContactPage';
+import LoginPage from './view/login/LoginPage';
+import RegisterPage from './view/login/RegisterPage';
+import ShoppingCartPage from './view/cart/ShoppingCartPage';
+import CheckoutPage from './view/cart/CheckoutPage';
+import AboutUsPage from './view/about-us/AboutUsPage';
+import Test from './Test';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper" lang="ar">
+      <Router>
+        <Header />
+        <Switch>
+          <Route path="/" exact component={ProductListPage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/register" component={RegisterPage} />
+          <Route path="/contact" component={ContactPage} />
+          <Route path="/shopping-cart" component={ShoppingCartPage} />
+          <Route path="/checkout" component={CheckoutPage} />
+          <Route path="/about-us" component={AboutUsPage} />
+          <Route path="/test" component={Test} />
+        </Switch>
+        <Footer />
+      </Router>
     </div>
   );
 }
