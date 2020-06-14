@@ -36,9 +36,9 @@ textarea {
     Version: 1.1
 
 -----------------------------------------------------------------------------------
-    
-    [Table of contents] 
-	
+
+    [Table of contents]
+
     1. Template default css (assets/css/bundle.css)
     2. Home furniture
     3. Home electronics
@@ -66,7 +66,7 @@ textarea {
     25. Blog details
     26. Contact page
     27. ScrollUp
-    
+
 -----------------------------------------------------------------------------------*/
 
 /*----------- 2. Home furniture --------*/
@@ -2821,11 +2821,11 @@ input.cart-plus-minus-box {
   color: #737373;
 }
 .shop-page-wrapper {
-  padding: 100px 145px 40px;
+  padding: 50px 145px 40px;
 }
 .shop-page-wrapper.padding-filter,
 .shop-page-wrapper.shop-wrapper-pd {
-  padding: 100px 145px 60px;
+  padding: 50px 145px 60px;
 }
 
 .shop-page-wrapper .container {

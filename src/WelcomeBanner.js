@@ -4,7 +4,7 @@ import pic from './assets/img/3d-blue-yellow.jpg';
 const WelcomeBanner = () => {
   var sectionStyle = {
     width: '100%',
-    height: '63vh',
+    height: '43vh',
     backgroundImage: `url(${pic})`,
   };
 

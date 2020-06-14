@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import pic from '../../assets/img/shop/laptop320x364.jpg';
 import { Modal } from 'reactstrap';
 import ProductModal from './ProductModal';
 
@@ -8,10 +7,10 @@ const ProductListItemCard = props => {
   const toggle = () => setModal(!modal);
 
   return (
-    <div className="single-product single-product-list mb-40">
+    <div className="single-product single-product-list mb-50">
       <div className="product-img list-img-width">
         <a href="#toggle" onClick={toggle}>
-          <img src={pic} alt="" />
+          <img src={props.product.picLocation} alt="" />
         </a>
         {props.product.sale ? <span>sale</span> : null}
       </div>

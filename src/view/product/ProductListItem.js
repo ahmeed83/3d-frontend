@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import pic from '../../assets/img/shop/laptop302x365.jpg';
 import { Modal } from 'reactstrap';
 import ProductModal from './ProductModal';
 
@@ -12,7 +11,7 @@ const ProductListItem = props => {
       <div className="single-product mb-35">
         <div className="product-img">
           <a href="#toggle" onClick={toggle}>
-            <img src={pic} alt="" />
+            <img src={props.product.picLocation} alt="" />
           </a>
           {props.product.sale ? <span>sale</span> : null}
         </div>
@@ -22,12 +21,14 @@ const ProductListItem = props => {
               <h4>{props.product.name}</h4>
             </div>
             <div className="product-price">
-              <span>$ {props.product.price}</span>
+              <span>${props.product.price}</span>
             </div>
           </div>
           <div className="product-cart-category">
             <div className="product-cart">
-              <span>{props.product.categoryName}</span>
+              <span>{props.product.category.name}</span>
+              &nbsp;
+              <span>({props.product.subCategory.name})</span>
             </div>
             <div className="product-category">
               <a href="/">

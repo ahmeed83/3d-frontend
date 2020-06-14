@@ -12,21 +12,33 @@ import ShoppingCartPage from './view/cart/ShoppingCartPage';
 import CheckoutPage from './view/cart/CheckoutPage';
 import AboutUsPage from './view/about-us/AboutUsPage';
 import Test from './Test';
+import ProductContextProvider from './services/context/ProductContext';
+import LoginContextProvider from './services/context/LoginContext';
+import ManagementRoutes from './ManagementRoutes';
 
 function App() {
   return (
     <div className="wrapper" lang="ar">
       <Router>
-        <Header />
+        <LoginContextProvider>
+          <Header />
+          <ManagementRoutes />
+        </LoginContextProvider>
         <Switch>
-          <Route path="/" exact component={ProductListPage} />
-          <Route path="/login" component={LoginPage} />
+          <Route path="/login">
+            <LoginPage />
+          </Route>
           <Route path="/register" component={RegisterPage} />
           <Route path="/contact" component={ContactPage} />
           <Route path="/shopping-cart" component={ShoppingCartPage} />
           <Route path="/checkout" component={CheckoutPage} />
           <Route path="/about-us" component={AboutUsPage} />
           <Route path="/test" component={Test} />
+          <ProductContextProvider>
+            <Route exact path="/">
+              <ProductListPage />
+            </Route>
+          </ProductContextProvider>
         </Switch>
         <Footer />
       </Router>

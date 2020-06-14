@@ -1,42 +1,39 @@
-import React, { useState } from 'react';
-
-import Context from '../../components/services/context';
-import ListCategoryProvider from '../../components/services/ListCategoryProvider';
-
-import ProductListContainer from './ProductListContainer';
+import React, { useState, useEffect } from 'react';
+import { getCategoriesOpen } from '../../services/client';
 
 const ProductListFilter = props => {
-  const [searchTerm, setSearchTerm] = useState();
-  const [searchCategoryName, setSearchCategoryName] = useState('');
-  const handleChange = event => {
-    setSearchTerm(event.target.value);
-  };
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    let isMounted = true;
+    getCategoriesOpen().then(res => {
+      if (isMounted) {
+        setCategories(res.data);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const chooseCategory = categoryName => {
-    setSearchCategoryName(categoryName);
+    props.products.setPageNumber(0);
+    props.products.setCategoryName(categoryName);
   };
 
-  const doNothing = e => {
-    e.preventDefault();
-    console.log('onclick..');
+  const chooseProduct = e => {
+    if (e.key === 'Enter') {
+      console.log(e.target.value);
+      props.products.setPageNumber(0);
+      props.products.setProductName(e.target.value);
+    }
   };
 
-  const productFilteredList =
-    searchTerm || searchCategoryName
-      ? !searchCategoryName
-        ? props.context.products.filter(product =>
-            product.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
-          )
-        : props.context.products.filter(
-            product =>
-              product.categoryName.toLowerCase() ===
-              searchCategoryName.toLocaleLowerCase()
-          )
-      : props.context.products;
+  function reset() {
+    window.location.reload(false);
+  }
 
   return (
     <div>
-      <ProductListContainer products={productFilteredList} />
       <div className="shop-filters-left">
         <div className="shop-sidebar">
           <div className="sidebar-widget mb-50">
@@ -45,45 +42,37 @@ const ProductListFilter = props => {
               <form action="/">
                 <input
                   type="text"
-                  onChange={handleChange}
+                  onKeyPress={chooseProduct}
                   placeholder="أبحث من خلال اسم المنتج"
                 />
-                <button onClick={doNothing}>
+                <button type="button">
                   <i className="ion-ios-search-strong"></i>
                 </button>
               </form>
             </div>
           </div>
-          <ListCategoryProvider>
-            <Context.Consumer>
-              {context => (
-                <div className="sidebar-widget mb-45">
-                  <h3 className="sidebar-title">اختر واحد من التصنيفات</h3>
-                  <div className="sidebar-categories">
-                    <ul>
-                      {context.categories.map(category => (
-                        <li
-                          key={category.id}
-                          onClick={() => {
-                            chooseCategory(category.name);
-                          }}
-                        >
-                          <a href="#-">
-                            {category.name} <span>5</span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              )}
-            </Context.Consumer>
-          </ListCategoryProvider>
-        </div>
-        <div className="quickview-btn-cart">
-          <a className="btn-hover-black" href={handleChange}>
-            Reset
-          </a>
+          <div className="sidebar-widget mb-45">
+            <h3 className="sidebar-title">اختر واحد من التصنيفات</h3>
+            <div className="sidebar-categories">
+              <ul>
+                {categories.map(category => (
+                  <li
+                    key={category.id}
+                    onClick={() => {
+                      chooseCategory(category.name);
+                    }}
+                  >
+                    <a href="#-">{category.name}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="quickview-btn-cart">
+            <a href="#-" onClick={reset} className="btn-hover-black">
+              Reset
+            </a>
+          </div>
         </div>
       </div>
     </div>
